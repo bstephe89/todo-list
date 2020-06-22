@@ -2,7 +2,7 @@ const mongoose = require(`mongoose`);
 
 let {
     APPNAME,
-    DBURI
+    MONGODB_URI
 } = require(`./config`);
 
 const dbOptions = {
@@ -13,7 +13,7 @@ const dbOptions = {
 }
 
 module.exports = () => {
-    mongoose.connect(DBURI, dbOptions);
+    mongoose.connect(MONGODB_URI, dbOptions);
 
     mongoose.connection.on(`connected`, () => {
         console.log(`Mongoose connected to the database...`)

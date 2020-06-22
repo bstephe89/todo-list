@@ -1,17 +1,14 @@
 const express = require(`express`);
 const mongoose = require(`mongoose`);
 const PORT = require(`./config`).PORT;
-const router = require('express').Router();
+const path = require("path")
 
 const db = require(`./db`);
 const server = express();
 
 //middleware
 server.use(express.json());
-server.use(express.static(path.join(__dirname, '../client/build')))
-server.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './client/build'))
-})
+server.use(express.static(path.join(__dirname, "client", "build")))
 
 db();
 
@@ -43,6 +40,10 @@ server.post("/todos", (req, res, next)=> {
 server.delete("/todos/:id", (req, res, next)=> {
     todoModel.findByIdAndDelete(req.params.id)
     .then(() => res.json({remove: true}))
+});
+
+server.get("*", (req, res, next) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 server.listen(PORT, (err) => {
